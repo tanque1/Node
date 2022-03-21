@@ -10,12 +10,15 @@
   },
   "author": "tanque",
   "license": "ISC",
+  
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.3",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.7",
     "node-sass": "^7.0.1",
     "nodemon": "^2.0.15"
   }
