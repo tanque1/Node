@@ -32,9 +32,31 @@ class ProductsControllers {
         })
         .catch(next);
      }
+     edit(req,res,next){
+         console.log(req.params.id)
+         Product.findById(req.params.id)
+         .then(products => {
+             products = mongooseToObject(products);
+             res.render("products/edit",{products})
+
+         })
+         .catch(next);
+     }
+     delete(req,res,next){
+        res.render("delete")
+     }
      
-   
-  
+     update(req,res,next){
+        Product.updateOne({_id:req.params.id},req.body)
+        .then(ress => {
+            res.redirect('/products')
+        })
+        .catch(ress =>{
+            res.send(ress.matchedCount)
+        })
+         
+     }
+     
   
 
 }

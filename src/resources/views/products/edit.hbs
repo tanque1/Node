@@ -1,0 +1,19 @@
+<div class='mt-4'>
+	<h3>Sửa sản phẩm</h3>
+	<form method='post' action='/products/{{products._id}}/?_method=PUT' >
+		<div class='mb-3'>
+			<label for='name' class='form-label'>Ten san pham</label>
+			<input type='text' class='form-control' value="{{products.name}}" id='name' name='name'/>
+		</div>
+		<div class='mb-3'>
+			<label for='description' class='form-label'>Nhap mo ta</label>
+			<Textarea type='text' class='form-control' id='description' name='description'>{{products.description}}</Textarea>
+		</div>
+		<div class='mb-3'>
+			<label for='thumbnail' class='form-label'>Hinh anh</label>
+			<input type='text' class='form-control' value="{{products.thumbnail}}" id='thumbnail' name='thumbnail'/>
+		</div>
+  
+		<button type='submit' class='btn btn-primary'>Lưu sản phẩm</button>
+	</form>
+</div>

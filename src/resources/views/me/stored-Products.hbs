@@ -1,0 +1,46 @@
+<div class="mt-4">
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Tên</th>
+      <th scope="col">Hình ảnh</th>
+      <th scope="col" colspan="2">Thời gian tạo</th>
+    </tr>
+  </thead>
+  <tbody>
+      {{#each products}}
+    <tr>
+      <th scope="row">{{sum @index 1}}</th>
+      <td>{{this.name}}</td>
+      <td><img src="{{this.thumbnail}}" alt=""width="150" height="100" ></td>
+      <td>{{this.createdAt}}</td>
+      <td><a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</a></td>
+      <td><a href="/products/{{this._id}}/delete" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Xoá</a></td>
+
+    </tr>
+
+      {{/each }}
+   
+  </tbody>
+</table>
+</div>
+
+
+<div class="modal" id="exampleModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Xác nhận</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có muốn xoá sản phẩm này không.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Huỷ bỏ</button>
+        <button type="button" class="btn btn-danger">Xác nhận</button>
+      </div>
+    </div>
+  </div>
+</div>
