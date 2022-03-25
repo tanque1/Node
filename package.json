@@ -10,11 +10,14 @@
   },
   "author": "tanque",
   "license": "ISC",
-  
   "dependencies": {
     "express": "^4.17.3",
     "express-handlebars": "^6.0.3",
-    "morgan": "^1.10.0"
+    "express-urlrewrite": "^2.0.0",
+    "mongoose": "^6.2.8",
+    "mongoose-slug-generator": "^1.0.4",
+    "morgan": "^1.10.0",
+    "url-rewrite": "^0.4.2"
   },
   "devDependencies": {
     "husky": "^7.0.4",

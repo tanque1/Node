@@ -1,1 +1,23 @@
-<h1>Example App: Home</h1>
+<div class='mt-4'>
+	<div class='row'>
+		<p>{{products.name}}</p>
+		{{#each products}}
+			<div class='col-sm-6 col-lg-4 mt-4'>
+
+				<div class='card'>
+					<a href='/products-{{this.slug}}'>
+						<img src='{{this.thumbnail}}' class='card-img-top' alt='...' />
+					</a>
+					<div class='card-body'>
+						<a href='/products-{{this.slug}}'>
+							<h5 class='card-title'>{{this.name}}</h5>
+						</a>
+						<p class='card-text'>{{this.description}}</p>
+						<a href='#' class='btn btn-primary'>Go somewhere</a>
+					</div>
+				</div>
+
+			</div>
+		{{/each}}
+	</div>
+</div>
