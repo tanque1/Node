@@ -7,8 +7,8 @@ function route(app) {
 	app.use('/products',productsRouter)
 	app.use('/news', newsRouter);
 	app.use('/me',meRouter)
-	// app.use('/products',productsRouter);
-	// app.use(rewrite(/^\/products-(.+)/, '/products?slug=$1'),productsRouter)
+	app.use('/products',productsRouter);
+	app.use(rewrite(/^\/products-(.+)/, '/products?slug=$1'),productsRouter)
 	app.use('/', siteRouter);
 }
 

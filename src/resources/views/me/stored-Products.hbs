@@ -16,7 +16,7 @@
       <td><img src="{{this.thumbnail}}" alt=""width="150" height="100" ></td>
       <td>{{this.createdAt}}</td>
       <td><a href="/products/{{this._id}}/edit" class="btn btn-link">Sửa</a></td>
-      <td><a href="/products/{{this._id}}/delete" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Xoá</a></td>
+      <td><a data-id="{{this._id}}" href="" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Xoá</a></td>
 
     </tr>
 
@@ -39,8 +39,27 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Huỷ bỏ</button>
-        <button type="button" class="btn btn-danger">Xác nhận</button>
+        <button type="button" id="btn-delete-product" class="btn btn-danger">Xác nhận</button>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  var productId;
+  var exampleModal = document.getElementById('exampleModal')
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+  // Button that triggered the modal
+  var button = event.relatedTarget
+  // Extract info from data-bs-* attributes
+  productId = button.getAttribute('data-id')
+ 
+})
+  let btnDeleteProduct = document.getElementById('btn-delete-product');
+  btnDeleteProduct.onclick = () => {
+    fetch(`http://localhost:3000/products/${productId}/delete`, {
+    method: 'DELETE', // or 'PUT'
+    })
+    .then((e) =>  window.location.href=e.url)
+}
+</script>
