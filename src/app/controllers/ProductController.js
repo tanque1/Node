@@ -44,7 +44,7 @@ class ProductsControllers {
      }
      // [DELETE] /products/id/delete
      delete(req,res,next){
-        Product.deleteOne({_id:req.params.id})
+        Product.delete({_id:req.params.id})
         .then(products => {
             res.redirect('back')
         })
@@ -61,8 +61,44 @@ class ProductsControllers {
         })
          
      }
-     
-  
+     // [PATCH] /prouducts/:id/restore
+     restore(req,res,next){
+        Product.restore({_id:req.params.id})
+        .then(ress => {
+            res.redirect('back')
+        })
+        .catch(next)
+     }
+     // [DELETE] /products/:id/restore
+     forceDelete(req,res,next){
+        Product.deleteOne({_id:req.params.id})
+        .then(ress => {
+            res.redirect('back')
+        })
+        .catch(next)
+     }
+     // [POST] /products/handle-form-actions
+     handleFormActions(req,res,next) {
+            switch(req.body.action){
+                case 'delete':
+                    Product.delete({_id:{$in:req.body.productsIds}})
+                    .then(products => {
+                    res.redirect('back')
+                    })
+                    .catch(next)
+                    break;
+                case 'restore':
+                    Product.restore({_id:{$in:req.body.productsIds}})
+                    .then(ress => {
+                        res.redirect('back')
+                    })
+                    .catch(next)
+                    break;
+                default:
+                    res.json({action:"Action is invalid!"})
+            }
+
+     }
 
 }
 

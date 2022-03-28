@@ -1,0 +1,149 @@
+<form class='mt-4' name="container-form" method="POST" action="/products/handle-form-actions">
+	<div>
+		<a href='/me/stored/products'>Quay lại</a>
+		<h3>
+			Sản phẩm đã xoá
+		</h3>
+		<div class="mt-4 d-flex align-items-baseline">
+       <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="checkbox-all">
+      <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
+      </div>
+      <select name="action" required class="form-select form-control-sm checkbox-select-all-options" aria-label="Default select example">
+        <option value=""> -- Hành động -- </option>
+        <option value="restore">Khôi phục</option>
+      </select>
+
+      <button type="submit" class="btn btn-primary btn-sm btn-check-all-submit" disabled>Thực hiện</button>
+    </div>
+	</div>
+	<table class='table'>
+		<thead>
+			<tr>
+				<th scope='col'>#</th>
+				<th scope='col'>Tên</th>
+				<th scope='col'>Hình ảnh</th>
+				<th scope='col' colspan='3'>Thời gian xoá</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each products}}
+				<tr>
+					<td>
+						<div class="form-check">
+						<input type="checkbox" class="form-check-input" name="productsIds[]" value="{{this._id}}">
+						</div>
+					</td>
+					<th scope='row'>{{sum @index 1}}</th>
+					<td>{{this.name}}</td>
+					<td><img src='{{this.thumbnail}}' alt='' width='150' height='100' /></td>
+					<td>{{this.deletedAt}}</td>
+					<td><a href='' data-id='{{this._id}}' class='btn btn-link btn-restore'>Khôi phục</a></td>
+					<td><a
+							data-id='{{this._id}}'
+							href=''
+							class='btn btn-link'
+							data-bs-toggle='modal'
+							data-bs-target='#exampleModal'
+						>Xoá vĩnh viễn</a></td>
+
+				</tr>
+			{{else}}
+				<tr>
+					<td colspan='5' class='text-center'>Thùng rác trống.
+						<a href='/me/stored/products'>Danh sách khoá học</a>
+
+					</td>
+				</tr>
+
+			{{/each}}
+
+		</tbody>
+	</table>
+</form>
+
+<div class='modal' id='exampleModal' tabindex='-1'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<h5 class='modal-title'>Xác nhận</h5>
+				<button
+					type='button'
+					class='btn-close'
+					data-bs-dismiss='modal'
+					aria-label='Close'
+				></button>
+			</div>
+			<div class='modal-body'>
+				<p>Bạn có muốn xoá sản phẩm này không.</p>
+			</div>
+			<div class='modal-footer'>
+				<button type='button' class='btn btn-primary' data-bs-dismiss='modal'>Huỷ bỏ</button>
+				<button type='button' id='btn-delete-product' class='btn btn-danger'>Xác nhận</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function (){
+  
+  var productId;
+  const checkboxAll = $('#checkbox-all');
+  const checkAllSubmitBtn = $('.btn-check-all-submit')
+  const containerForm = $('form[name="container-form"]')
+  const productItemCheckbox = $('input[name="productsIds[]"]')
+  var exampleModal = document.getElementById('exampleModal')
+	exampleModal.addEventListener('show.bs.modal', function (event) { 
+  // Button that triggered the modal 
+  var button = event.relatedTarget 
+  // Extract info from data-bs-* attributes 
+  productId = button.getAttribute('data-id') }) 
+  let restoreBtn = $('.btn-restore');
+  restoreBtn.click(function (event){
+    event.preventDefault();
+    $(this).data('id')
+    fetch(`http://localhost:3000/products/${$(this).data('id')}/restore`, 
+  { method: 'PATCH', }) 
+  .then((e) => window.location.href=e.url)
+  });
+
+  let btnDeleteProduct = document.getElementById('btn-delete-product'); 
+  btnDeleteProduct.onclick = () => {
+	fetch(`http://localhost:3000/products/${productId}/force`, 
+  { method: 'DELETE', }) 
+  .then((e) => window.location.href=e.url) }
+
+
+   checkboxAll.change(function (){
+    let isCheckedAll= $(this).prop('checked');
+
+    productItemCheckbox.prop('checked',isCheckedAll)
+    renderCheckAllSubmitBtn();
+  })
+
+
+  // Product item change checkbox
+    productItemCheckbox.change(function (){
+      let isCheckedAll= productItemCheckbox.length === $('input[name="productsIds[]"]:checked').length;
+      checkboxAll.prop('checked',isCheckedAll)
+      renderCheckAllSubmitBtn()
+    })
+
+    // check all submit button clicked
+
+
+
+
+    // re-render button submit
+    function renderCheckAllSubmitBtn() {
+        const checkedCount = $('input[name="productsIds[]"]:checked').length;
+        checkAllSubmitBtn.attr('disabled',!checkedCount)
+    }
+
+
+
+
+  })
+</script>
