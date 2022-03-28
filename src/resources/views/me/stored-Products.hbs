@@ -23,9 +23,7 @@
       <th scope="col" colspan='2'>#</th>
       <th scope="col">
         Tên
-        <a href="?_sort&column=name&type=desc">
-        <span class="oi oi-elevator"></span>
-        </a>
+        {{{sortable 'name' _sort }}}
       </th>
       <th scope="col">Hình ảnh</th>
       <th scope="col" colspan="3">Thời gian tạo</th>
@@ -39,7 +37,7 @@
           <input type="checkbox" class="form-check-input" name="productsIds[]" value="{{this._id}}">
         </div>
       </td>
-      <th scope="row">{{sum @index 1}}</th>
+      <th scope="row">{{this._id}}</th>
       <td>{{this.name}}</td>
       <td><img src="{{this.thumbnail}}" alt=""width="150" height="100" ></td>
       <td>{{this.createdAt}}</td>

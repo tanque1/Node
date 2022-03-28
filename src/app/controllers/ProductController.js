@@ -22,7 +22,7 @@ class ProductsControllers {
         const products = new Product(req.body);
         products.save()
             .then(() => res.redirect('/products'))
-            .catch(() => {})
+            .catch(next)
      }
      home(req,res,next){
         Product.find({})
@@ -45,7 +45,7 @@ class ProductsControllers {
      // [DELETE] /products/id/delete
      delete(req,res,next){
         Product.delete({_id:req.params.id})
-        .then(products => {
+        .then(() => {
             res.redirect('back')
         })
         .catch(next)

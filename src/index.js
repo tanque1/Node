@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 const {engine} = require('express-handlebars');
+
+const sortMiddleware = require('./app/middlewares/sortMiddleware');
+
 const app = express();
 const port = 3000;
 
@@ -23,15 +26,14 @@ app.use(express.json());
 
 app.use(methodOverride("_method"))
 
+app.use(sortMiddleware);
 
 // Template engine
 app.engine(
 	'hbs',
 	engine({
 		extname: '.hbs',
-		helpers: {
-			sum: (a, b) => a + b,
-		},
+		helpers: require('./helpers/handlebars')
 	})
 );
 app.set('view engine', 'hbs');
